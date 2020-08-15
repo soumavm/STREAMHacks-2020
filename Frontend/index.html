@@ -152,18 +152,18 @@
 						<h1><img src="./Assets/door.png">Login</h1>
 						<div style="width:75%; margin-left:30px;margin-bottom:10px;">
               
-						  <div class="row" align = "right">
-                <input id="namebar" class="form-control" type="text" placeholder="Name">
-              </div>
-                                                                                                 
+							<div class="row" align = "right">
+								<input id="namebar" class="form-control" type="text" placeholder="Name">
+							</div>
+
 							<div class="row" align="right">
 								<input id="emailbar" class="form-control" type="text" placeholder="Email">
 							</div>
-		
+			
 							<div class="row" align="right">
 								<input id="passwordbar" class="form-control" type="password" placeholder="Password">
 							</div>
-																									
+																										
 							<div class="row" align = "right">
 								<button type="button" class="sign-in" onclick="login()"> Log In </button>
 								<button type="button" class="sign-in" onclick="register()"> Register </button>
@@ -190,35 +190,38 @@
 						</div>
 					</div>
 				</div> <!--goals-->
-			</div> <!--Login + goals-->
+				</div> <!--Login + goals-->
 			<div class="col-xs-2">
 				<!--Leaderboard-->
 				<div class="row major-container" style="background-color: chocolate;">
 					<h1><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
-            <div class="leader row">
+					<div style="padding-left:20px;">
+						<div class="leader row">
 
-            </div> <!--Leaderboard entry 1-->
-
-            <div class="leader row">
-
-            </div> <!--Leaderboard entry 2-->
-
-            <div class="leader row">
-
-            </div> <!--Leaderboard entry 3-->
-
-            <div class="leader row">
-
-            </div> <!--Leaderboard entry 4-->
-
-            <div class="leader row">
-
-            </div> <!--Leaderboard entry 5-->
+						</div> <!--Leaderboard entry 1-->
+	
+						<div class="leader row">
+	
+						</div> <!--Leaderboard entry 2-->
+	
+						<div class="leader row">
+	
+						</div> <!--Leaderboard entry 3-->
+	
+						<div class="leader row">
+	
+						</div> <!--Leaderboard entry 4-->
+	
+						<div class="leader row">
+	
+						</div> <!--Leaderboard entry 5-->
+					</div>
+					<img src="./Assets/return.png">
 				</div> <!--Leaderboard End-->
 				<div class="major-container"style="background-color: pink;">
 					<h1 style=""><img src="./Assets/multiplayer.png">Me</h1>
 				</div>
-			</div>
+		</div>
 		</div> <!--Main Body End-->
 		<footer class="page-footer">
 
@@ -390,8 +393,8 @@
               console.log(element.toJSON().realName, element.toJSON().pointnumber)
               counter--;
               leaders[counter].innerHTML = `
-								<h4>${counter+1} ${element.toJSON().realName}</h4>
-								<p>${element.toJSON().pointnumber}</p>
+			  				<h4 style="padding-left:20px;">${element.toJSON().realName}</h4>
+							<p style="padding-left:20px;">${element.toJSON().pointnumber}</p>
 							`
             });
           });

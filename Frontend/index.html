@@ -12,25 +12,31 @@
 
 	<title>BikePath</title>
 
+
+
+
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCXeTdVH9fJT8cc8RRKICuUgLQEl4T1Y&callback=initMap&libraries=&v=weekly"
 			defer></script>
 
-	<script>
-        var Jason = document.getElementsByClassName("goal")
-        var yeet = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
-		function goal() {
-			for (let i = 0; i < Jason.length; i++) {
-				var Butt = Math.floor(Math.random() * yeet.length)
-				Jason[i].innerHTML = yeet[Butt]
-				yeet.splice(Butt, 1)
-			}
-		}
-		var points = 0
-		function AddPoint() {
-			
-			points += 1
-			alert(points)
-		}
+	var Jason = document.getElementsByClassName("goal")
+	var yeet = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
+	var yeet2 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
+	function goal() {
+	for (let i = 0; i < Jason.length; i++) {
+	var Butt = Math.floor(Math.random() * yeet.length)
+	Jason[i].innerHTML = yeet[Butt]
+	yeet.splice(Butt, 1)
+	}
+	}
+
+	var points = 0
+	function AddPoint(index, box) {
+	points += 1
+	alert("you have " + points + " point(s)")
+	var Butt  = Math.floor(Math.random() * yeet2.length)
+	Jason[index].innerHTML = yeet2[Butt]
+	box.checked=false
+	}
 	</script>
 	<!--give new goal, make id unchecked-->
 	<script>
@@ -75,16 +81,11 @@
 			var type = document.getElementById("destinationbar").value;
 			var location = document.getElementById("locationbar").value;
 
-			const data = {
-				'location': location,
-				'keyword': type,
-				'rankby': 'distance'
 
-fetch('http://127.0.0.1:5000/api/address?address=${this.state.address}&type={')
-	  .then(response => response.json())
-					.then(data => console.log(data));
+			fetch('http://127.0.0.1:5000/api/address?address=' + location + '&keyword=' + type)
+				.then(response => response.json())
+				.then(data => console.log(data));
 
-			}
 
 		}
 
@@ -105,6 +106,23 @@ fetch('http://127.0.0.1:5000/api/address?address=${this.state.address}&type={')
 
 				</div>
 			</div>
+
+			<div class="col-xs-12">
+				<div class="row" align="right">
+					<input id="emailbar" class="form-control" type="text" placeholder="Email">
+				</div>
+
+				<div class="row" align="right">
+					<input id="passwordbar" class="form-control" type="password" placeholder="Password">
+				</div>
+
+				<div class="row" align="right">
+					<div>
+
+					</div>
+				</div>
+
+			</div>
 			<div class="col-xs-6">
 				<div class="row">
 					<div class="md-form mt-0">
@@ -113,7 +131,6 @@ fetch('http://127.0.0.1:5000/api/address?address=${this.state.address}&type={')
 						<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
 						<div style="text-align:center;">
 							<button type="button" onclick="routeCalcbutton()" style="border:none;background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Search </button>
-							<button type="button" onclick="login()"style="border:none;background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"><img src="./Assets/door.png">Log In</button>
 						</div>
 
 
@@ -131,29 +148,34 @@ fetch('http://127.0.0.1:5000/api/address?address=${this.state.address}&type={')
 
 			<div class="col-xs-3">
 				<h1 style="background-color: seagreen;padding:10px;color:white;"><img src="./Assets/flag.png">Places</h1>
+				<div class="location"></div>
+				<div class="location"></div>
+				<div class="location"></div>
+				<div class="location"></div>
+				<div class="location"></div>
 			</div> <!--Places and Info-->
 			<div class="col-xs-3">
 				<div class="row" style="background-color: grey;padding:10px;color:white;">
 					<h1><img src="./Assets/menuList.png">Goals</h1>
 					<br />
 					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
 						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 					</div>
 					<br />
 					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
 						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 					</div>
 					<br />
 					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
 						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 					</div>
-			</div> <!--goals-->
-			<div class="row">
-				<h1 style="background-color: chocolate;padding:10px;color:white;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
-			</div> <!--Leaderboard-->
+				</div> <!--goals-->
+				<div class="row">
+					<h1 style="background-color: chocolate;padding:10px;color:white;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
+				</div> <!--Leaderboard-->
 
 			</div> <!--Leaderboard + goals-->
 		</div> <!--Columns-->
@@ -179,22 +201,33 @@ fetch('http://127.0.0.1:5000/api/address?address=${this.state.address}&type={')
 			// Initialize Firebase
 			firebase.initializeApp(firebaseConfig);
 		</script>
+
 		<script>
-			var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
+			function register(email, password) {
+				firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+					alert('success')
+				})
+					.catch(function (error) {
+						// Handle Errors here.
+						var errorCode = error.code;
+						var errorMessage = error.message;
+					});
+			}
 
-
-			ui.start('#firebaseui-auth-container', {
-				signInOptions: [
-					// List of OAuth providers supported.
-					firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-				],
-				// Other config options...
-			});
+			function login(email, password) {
+				firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+					alert('success')
+				})
+					.catch(function (error) {
+						// Handle Errors here.
+						var errorCode = error.code;
+						var errorMessage = error.message;
+					});
+			}
 		</script>
 
 
 
 </body>
 </html>
-

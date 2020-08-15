@@ -21,91 +21,64 @@
 		</script>
 	
 		<script>
-	
-			var goalElements = document.getElementsByClassName("goal")
-			var goals1 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
-		var goals2 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
-			function goal() {
-				for (let i = 0; i < goalElements.length; i++) {
-					var randomGoal = Math.floor(Math.random() * goals1.length)
-					goalElements[i].innerHTML = goals1[randomGoal]
-					goals1.splice(randomGoal, 1)
-				}
-			}
-
-			var points = 0
-			function AddPoint(index, box) {
-				points += 1
-				alert("You have " + points + " point(s)!")
-		var randomGoal  = Math.floor(Math.random() * goals2.length)
-				goalElements[index].innerHTML = goals2[randomGoal]
-				box.checked=false
-			}
-		</script>
-		<!--give new goal, make id unchecked-->
-		<script>
-			"use strict";
-	
-			let map;
-	
-			var directionsService;
-			var directionsRenderer;
-	
-			function initMap() {
-	
-				directionsService = new google.maps.DirectionsService();
-				directionsRenderer = new google.maps.DirectionsRenderer();
-				map = new google.maps.Map(document.getElementById("map"), {
-					center: {
-						lat: -34.397,
-						lng: 150.644
-					},
-					zoom: 8
-				});
-				directionsRenderer.setMap(map);
-				directionsRenderer.setPanel(document.getElementById('directionsPanel'));
-			}
-	
-			function calcRoute(start, end, mode) {
-	
-				var request = {
-					origin: start,
-					destination: end,
-					travelMode: mode
-				};
-				directionsService.route(request, function (response, status) {
-					if (status == 'OK') {
-						directionsRenderer.setDirections(response);
-					}
-				});
-			}
-	
-			function routeCalcbutton() {
-	
-				var type = document.getElementById("destinationbar").value;
-				var location = document.getElementById("locationbar").value;
-	
-	
-	fetch('http://127.0.0.1:5000/api/address?address=' + location + '&type=' + type)
-		.then(response => response.json())
-				.then(data => {
-		console.log(data)
-		var list = document.getElementsByClassName("location")
-		
-		for(let i = 0; i < list.length; i++) {
-		let place = data.results[i];
-		list[i].innerHTML =
-			`<p>${place.name}</p>
-					<button type="button" style="color:black;"onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
-			<button type="button" style="color:black;"onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycle</button>`;
+		"use strict";
+ 
+		let map;
+ 
+		var directionsService;
+		var directionsRenderer;
+ 
+		function initMap() {
+ 
+			directionsService = new google.maps.DirectionsService();
+			directionsRenderer = new google.maps.DirectionsRenderer();
+			map = new google.maps.Map(document.getElementById("map"), {
+				center: {
+					lat: -34.397,
+					lng: 150.644
+				},
+				zoom: 8
+			});
+			directionsRenderer.setMap(map);
+			directionsRenderer.setPanel(document.getElementById('directionsPanel'));
 		}
-	});
-	
-	
-			}
-	
-	
-		</script>
+ 
+		function calcRoute(start, end, mode) {
+ 
+			var request = {
+				origin: start,
+				destination: end,
+				travelMode: mode
+			};
+			directionsService.route(request, function (response, status) {
+				if (status == 'OK') {
+					directionsRenderer.setDirections(response);
+				}
+			});
+		}
+ 
+		function routeCalcbutton() {
+ 
+			var type = document.getElementById("destinationbar").value;
+			var location = document.getElementById("locationbar").value;
+ 
+ 
+		  fetch('http://127.0.0.1:5000/api/address?address=' + location + '&type=' + type)
+		      .then(response => response.json())
+			    .then(data => {
+		    console.log(data)
+		    var list = document.getElementsByClassName("location")
+
+		    for(let i = 0; i < list.length; i++) {
+		      let place = data.results[i];
+		      list[i].innerHTML =
+			`<p>${place.name}</p>
+						<button type="button" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
+			<button type="button" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycling</button>`;
+		    }
+		  });
+		}
+	</script>
 	
 	</head>
  
@@ -164,6 +137,11 @@
 					<div class="row major-container" style="background-color: rgb(90, 146, 211);">
 						<h1><img src="./Assets/door.png">Login</h1>
 						<div style="width:75%; margin-left:30px;margin-bottom:10px;">
+              
+						  <div class="row" align = "right">
+                <input id="namebar" class="form-control" type="text" placeholder="Name">
+              </div>
+                                                                                                 
 							<div class="row" align="right">
 								<input id="emailbar" class="form-control" type="text" placeholder="Email">
 							</div>
@@ -188,13 +166,13 @@
 						</div>
 						<br />
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-							<label class="goal custom-control-label" for="defaultUnchecked">Loading Goal</label>
+							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(1, this)">
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 						</div>
 						<br />
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-							<label class="goal custom-control-label" for="defaultUnchecked">Loading Goal</label>
+							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(2, this)">
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 						</div>
 					</div>
 				</div> <!--goals-->
@@ -203,6 +181,25 @@
 				<!--Leaderboard-->
 				<div class="row major-container" style="background-color: chocolate;">
 					<h1><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
+            <div class="leader row">
+
+            </div> <!--Leaderboard entry 1-->
+
+            <div class="leader row">
+
+            </div> <!--Leaderboard entry 2-->
+
+            <div class="leader row">
+
+            </div> <!--Leaderboard entry 3-->
+
+            <div class="leader row">
+
+            </div> <!--Leaderboard entry 4-->
+
+            <div class="leader row">
+
+            </div> <!--Leaderboard entry 5-->
 				</div> <!--Leaderboard End-->
 			</div>
 		</div> <!--Main Body End-->
@@ -231,83 +228,159 @@
 				firebase.initializeApp(firebaseConfig);
 		</script>
 		
-		<script>
-			
-		var points    
-			
-	function register() {     
-		var email = document.getElementById("emailbar").value;
-		var password = document.getElementById("passwordbar").value;
-		
-		firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-			alert('success')
-			points = 0;
-		})
-		
-			.catch(function(error) {
-			// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-			console.log(errorCode, errorMessage);
-			alert(errorMessage);
-		});
-	}
-		
-		function login() {    
-		
-		var email = document.getElementById("emailbar").value;
-		var password = document.getElementById("passwordbar").value;
-		firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-			alert('success')
-			getPointValue();
-			
-		})
-			.catch(function(error) {
-			// Handle Errors here.
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			console.log(errorCode, errorMessage);
-			alert(errorMessage);
-				});
-		}
-			
-		function writeUserData(points, goals) {
-		
-			var userId = firebase.auth().currentUser.uid;
-		
-			firebase.database().ref('users/' + userId).set({
-			
-			pointnumber : points,
-				firstGoal : goals[0],
-			secondGoal : goals[1],
-			thirdGoal : goals[2]
-		})
-			
-		}
-			
-		function getPointValue() {
-			
-			var userId = firebase.auth().currentUser.uid;
-					return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-				points = snapshot.val().pointnumber;
-				});
-			
+    	<script>
+        
+    var points = 0
+    var goalsStored = [-1,-1,-1]
+    
+    var goalElements = document.getElementsByClassName("goal")
+		var goals = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
+        
+		function goal() {
+      loadScores();
+      
+			for (let i = 0; i < goalElements.length; i++) {
+        
+				let randomGoal = Math.floor(Math.random() * goals.length)
+        
+        while(goalsStored.indexOf(randomGoal) != -1)
+          randomGoal = Math.floor(Math.random() * goals.length)
+        
+				goalElements[i].innerHTML = goals[randomGoal]
+        goalsStored[i] = randomGoal
 			}
-			
-			
-		function AddPoint() {
-		
-		var userId = firebase.auth().currentUser.uid;
-		
-		firebase.database().ref('users/' + userId).set({
-			pointnumber : points+1,
-			})
-
-		
-		getPointValue()
 		}
-			
-		</script>  
+        
+   function register() {     
+   	 var email = document.getElementById("emailbar").value;
+   	 var password = document.getElementById("passwordbar").value;
+     var name = document.getElementById("namebar").value;
+     
+     firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+        alert('success')
+       
+       registername(name)
+       	writeUserData();
+       
+      })
+     
+     	.catch(function(error) {
+  		// Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        alert(errorMessage);
+      });
+   }
+        
+    function registername(name) {
+    
+      var userId = firebase.auth().currentUser.uid;
+      
+      firebase.database().ref('users/' + userId).update({
+        
+        realName : name
+    })
+      
+    }
+    
+    function login() {    
+      
+      var email = document.getElementById("emailbar").value;
+      var password = document.getElementById("passwordbar").value;
+      firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+        alert('success')
+     	 getPointValue()
+        
+      })
+     	.catch(function(error) {
+  		// Handle Errors here.
+  		var errorCode = error.code;
+  		var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        alert(errorMessage);
+			});
+    }
+        
+    function writeUserData() {
+      
+        var userId = firebase.auth().currentUser.uid;
+      firebase.database().ref('users/' + userId).update({
+        
+        pointnumber : points,
+    		firstGoal : goalsStored[0],
+        secondGoal : goalsStored[1],
+        thirdGoal : goalsStored[2]
+    })
+        
+    }
+        
+    function getPointValue() {
+        
+      var userId = firebase.auth().currentUser.uid;
+        var user = firebase.auth().currentUser;
+        var userId = user.uid;
+      
+				return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+  			points = snapshot.val().pointnumber;
+          
+      	goalsStored[0] = snapshot.val().firstGoal;
+      	goalsStored[1] = snapshot.val().secondGoal;
+      	goalsStored[2] = snapshot.val().thirdGoal;
+          
+          for(let i = 0; i < goalsStored.length; i++) {
+            
+						goalElements[i].innerHTML = goals[goalsStored[i]];
+          }
+          
+          
+			alert("You have " + points + " point(s)!")
+			});
+        
+  		}
+        
+        
+    function AddPoint(index, box) {
+       
+        var user = firebase.auth().currentUser;
+      
+      points++;
+      
+      if(user) {
+        var userId = user.uid;
+        
+       	writeUserData();
+      }
+
+			alert("You have " + points + " point(s)!")
+      
+      let randomGoal  = Math.floor(Math.random() * goals.length)
+      
+      while(goalsStored.indexOf(randomGoal) != -1)
+        randomGoal = Math.floor(Math.random() * goals.length)
+      
+			goalElements[index].innerHTML = goals[randomGoal]
+      goalsStored[index] = randomGoal
+			box.checked=false
+		}
+        
+        function loadScores() {
+          leaders = document.getElementsByClassName("leader")
+          let counter = leaders.length;
+          
+          firebase.database().ref('/users').orderByChild('pointnumber').limitToLast(leaders.length).once('value').then(function(snapshot) {
+          	snapshot.forEach(element => {
+              console.log(element.toJSON().realName, element.toJSON().pointnumber)
+              counter--;
+              leaders[counter].innerHTML = `
+								<h4>${element.toJSON().realName}</h4>
+								<p>${element.toJSON().pointnumber}</p>
+							`
+            });
+          });
+        }
+        
+    	</script>  
 		
 	</body>
 </html>

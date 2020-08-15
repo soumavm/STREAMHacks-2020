@@ -1,85 +1,164 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="./style.css" rel="stylesheet" type="text/css"/>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <title>BikePath</title>
-    </head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<title>BikePath</title>
 
-<body>
-	<div class="jumbotron text-center"style="background-image: url(./background.png); background-size: 100%;">
- 		<h1>BikePath</h1> 
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCXeTdVH9fJT8cc8RRKICuUgLQEl4T1Y&callback=initMap&libraries=&v=weekly"
+			defer></script>
+
+	<script>
+		function goal() {
+			var Jason = document.getElementsByClassName("goal")
+			var yeet = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15km"];
+			for (let i = 0; i < Jason.length; i++) {
+				var Butt = Math.floor(Math.random() * yeet.length)
+				Jason[i].innerHTML = yeet[Butt]
+				yeet.splice(Butt, 1)
+			}
+		}
+	</script>
+
+	<script>
+		"use strict";
+
+		let map;
+
+		var directionsService;
+		var directionsRenderer
+
+		function initMap() {
+
+			directionsService = new google.maps.DirectionsService();
+			directionsRenderer = new google.maps.DirectionsRenderer();
+			map = new google.maps.Map(document.getElementById("map"), {
+				center: {
+					lat: -34.397,
+					lng: 150.644
+				},
+				zoom: 8
+			});
+			directionsRenderer.setMap(map);
+			directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+		}
+
+		function calcRoute(start, end, mode) {
+
+			var request = {
+				origin: start,
+				destination: end,
+				travelMode: mode
+			};
+			directionsService.route(request, function (response, status) {
+				if (status == 'OK') {
+					directionsRenderer.setDirections(response);
+				}
+			});
+		}
+
+		function routeCalcbutton() {
+
+			var type = document.getElementById("destinationbar").value;
+			var location = document.getElementById("locationbar").value;
+
+			const data = {
+				'location': location,
+				'keyword': type,
+				'rankby': 'distance'
+			}
+
+		}
+
+
+	</script>
+
+</head>
+
+<body onload="goal()" style="font-family: 'Baloo Tamma 2', cursive;">
+	<div class="jumbotron text-center" style="background-image: url(./Assets/background.png); background-size: 100%;">
+		<h1 style="color:grey">BikePath</h1>
 	</div>
-<div class="container">
+	<div class="container">
 		<div class="row">
+			<div class="col-xs-12">
+				<div align="right">
+					<button type="button" onclick="login()">Log In</button>
+				</div>
+			</div>
 			<div class="col-xs-6">
 				<div class="row">
 					<div class="md-form mt-0">
-  						<input class="form-control" type="text" placeholder="Enter a Location" aria-label="Search">
-</div> <!--Search Bar-->
+						<input id="locationbar" class="form-control" type="text" placeholder="Enter your Location" aria-label="Search">
+						<p class="text-center" style="padding-top: 10px;">OR</p>
+						<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
+						<div style="text-align:center;"><button type="button" onclick="routeCalcbutton()" style="background-color:seagreen; padding-right: 75px;justify-items: center;margin: 10px;color:white;"> <img src="./Assets/zoom.png"> Search </button></div>
+
+
+					</div> <!--Search Bar-->
+					<div class="row">
+						<div class="col-xs-6">
+							<div id="map" style="float:left; width:600px;height:400px"></div>
+							<div id="directionsPanel" style="float:right;width:100%;height:100%"></div>
+
+						</div> <!--Map-->
+					</div>
 				</div> <!--Search Row-->
-				<div class="row">
-					<div class="col-xs-6">
-                				<h4>map goes here</h4>
-        				</div> <!--Map-->
-				</div>
 			</div> <!--Search and Map Column-->
 
 
-<div class="col-xs-3">
-<h4>Places</h4>
+			<div class="col-xs-3">
+				<h1 style="border-bottom: 3px solid red;">Places</h1>
 			</div> <!--Places and Info-->
 
 
-<div class="col-xs-3">
-	<div class="row">
-		<h4>Leaderboard</h4>
-	</div> <!--Leaderboard-->
-	<div class="row">
-		<h4>Quests</h4>
-	</div> <!--Quests-->
-			
-</div> <!--Leaderboard + Quests-->
-		 </div> <!--Columns-->
+			<div class="col-xs-3">
+				<div class="row">
+					<h1 style="border-bottom: 3px solid red;">Leaderboard</h1>
+				</div> <!--Leaderboard-->
+				<div class="row">
+					<h1 style="border-bottom: 3px solid red;">Goals</h1>
+				<br />
+					<div class="row"> <h2 class="goal">loading goal</h2><img src="./Assets/checkmark.png" width="100" /> </div>
+				<br />
+					<div class="row"> <h2 class="goal">loading goal</h2><img src="./Assets/checkmark.png" width="100" /></div>
+				<br />
+					<div class="row"> <h2 class="goal">loading goal</h2><img src="./Assets/checkmark.png" width="100" /></div>
 
 
+				</div> <!--goals-->
 
+			</div> <!--Leaderboard + goals-->
+		</div> <!--Columns-->
 		<!-- The core Firebase JS SDK is always required and must be listed first -->
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
 
 		<!-- TODO: Add SDKs for Firebase products that you want to use
-			https://firebase.google.com/docs/web/setup#available-libraries -->
+			 https://firebase.google.com/docs/web/setup#available-libraries -->
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
 
 		<script>
-		// Your web app's Firebase configuration
-		var firebaseConfig = {
-			apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
-			authDomain: "bikeity-bike.firebaseapp.com",
-			databaseURL: "https://bikeity-bike.firebaseio.com",
-			projectId: "bikeity-bike",
-			storageBucket: "bikeity-bike.appspot.com",
-			messagingSenderId: "815014324791",
-			appId: "1:815014324791:web:68da854e317eacdb342db2",
-			measurementId: "G-TWJ7M7LBM4"
-		};
-		// Initialize Firebase
-		firebase.initializeApp(firebaseConfig);
-		firebase.analytics();
-		var database = firebase.database();
+			// Your web app's Firebase configuration
+			var firebaseConfig = {
+				apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
+				authDomain: "bikeity-bike.firebaseapp.com",
+				databaseURL: "https://bikeity-bike.firebaseio.com",
+				projectId: "bikeity-bike",
+				storageBucket: "bikeity-bike.appspot.com",
+				messagingSenderId: "815014324791",
+				appId: "1:815014324791:web:68da854e317eacdb342db2",
+				measurementId: "G-TWJ7M7LBM4"
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
 		</script>
-		<script src="./leaderboard.js"></script>
-</body>
+
+
 </body>
 </html>
-
-
-
-
-
-
 

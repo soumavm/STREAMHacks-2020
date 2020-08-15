@@ -11,36 +11,10 @@
 	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
  
 	<title>BikePath</title>
- 
-  
-  
-  
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCXeTdVH9fJT8cc8RRKICuUgLQEl4T1Y&callback=initMap&libraries=&v=weekly"
-			defer></script>
-  
-	<script>
- 
-		var goalElements = document.getElementsByClassName("goal")
-		var goals1 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
-    var goals2 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
-		function goal() {
-			for (let i = 0; i < goalElements.length; i++) {
-				var randomGoal = Math.floor(Math.random() * goals1.length)
-				goalElements[i].innerHTML = goals1[randomGoal]
-				goals1.splice(randomGoal, 1)
-			}
-		}
 
-		var points = 0
-		function AddPoint(index, box) {
-			points += 1
-			alert("You have " + points + " point(s)!")
-      var randomGoal  = Math.floor(Math.random() * goals2.length)
-			goalElements[index].innerHTML = goals2[randomGoal]
-			box.checked=false
-		}
-	</script>
-	<!--give new goal, make id unchecked-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YXx_H5EipHu03s1prL1Rl-SA-4_-u7c&callback=initMap&libraries=&v=weekly"
+	defer></script>
+  
 	<script>
 		"use strict";
  
@@ -84,25 +58,21 @@
 			var location = document.getElementById("locationbar").value;
  
  
-  fetch('http://127.0.0.1:5000/api/address?address=' + location + '&type=' + type)
-      .then(response => response.json())
-            .then(data => {
-    console.log(data)
-    var list = document.getElementsByClassName("location")
-    
-    for(let i = 0; i < list.length; i++) {
-      let place = data.results[i];
-      list[i].innerHTML =
-        `<p>${place.name}</p>
-				<button type="button" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
-      	<button type="button" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycling</button>`;
-    }
-  });
- 
- 
+		  fetch('http://127.0.0.1:5000/api/address?address=' + location + '&type=' + type)
+		      .then(response => response.json())
+			    .then(data => {
+		    console.log(data)
+		    var list = document.getElementsByClassName("location")
+
+		    for(let i = 0; i < list.length; i++) {
+		      let place = data.results[i];
+		      list[i].innerHTML =
+			`<p>${place.name}</p>
+						<button type="button" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
+			<button type="button" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycling</button>`;
+		    }
+		  });
 		}
- 
- 
 	</script>
  
 </head>
@@ -121,14 +91,14 @@
 						<p class="text-center" style="padding-top: 10px;">AND</p>
 						<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
 						<div style="text-align:center;">
-							<button type="button" onclick="routeCalcbutton()" style="border:none;background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Search </button>
+							<button type="button" onclick="routeCalcbutton()" style="border:none;background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;border-radius: 50px;"> <img src="./Assets/zoom.png"> Search </button>
 						</div>
  
  
 					</div> <!--Search Bar-->
 					<div class="row">
 						<div class="col-xs-6">
-							<div id="map" style="float:left; width:600px;height:400px"></div>
+							<div id="map" style="float:left; width:585px;height:400px"></div>
 							<div id="directionsPanel" style="float:right;width:100%;height:100%"></div>
  
 						</div> <!--Map-->
@@ -138,19 +108,31 @@
  
  
 			<div class="col-xs-3">
-				<div style="background-color: seagreen;">
-					<h1 style="color:white;"><img src="./Assets/flag.png">Places</h1>
-					<div class="location"></div>
-					<div class="location"></div>
-					<div class="location"></div>
-					<div class="location"></div>
-					<div class="location"></div>
+				<div style="background-color: seagreen;border-radius: 50px;color:white">
+					<h1 style="padding:20px;"><img src="./Assets/flag.png">Places</h1>
+					<div style="padding-left: 30px; padding-bottom:30px;">
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
+					</div>
 				</div>
 			</div>
 			<div class="col-xs-3">
-				<div class="row" style="background-color: rgb(90, 146, 211);padding:10px;color:white;">
+				<div class="row" style="border-radius: 50px;background-color: rgb(90, 146, 211);padding:10px;color:white;">
 					<h1><img src="./Assets/door.png">Login</h1>
-					<div style="width:75%; margin-left:20px;margin-bottom:10px;">
+					<div style="width:75%; margin-left:30px;margin-bottom:10px;">
+						
+						<div class="row" align = "right">
+              						<input id="namebar" class="form-control" type="text" placeholder="Name">
+            					</div>
+						
 						<div class="row" align="right">
 							<input id="emailbar" class="form-control" type="text" placeholder="Email">
 						</div>
@@ -159,35 +141,57 @@
 							<input id="passwordbar" class="form-control" type="password" placeholder="Password">
 						</div>
                                                                                                  
-         <div class="row" align = "right">
-					<button type="button" onclick="login()" style="border:none;background-color:seagreen; padding-right: 60px;justify-items: center;margin: 5px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Log In </button>
-        	<button type="button" onclick="register()" style="border:none;background-color:seagreen; padding-right: 40px;justify-items: center;margin: 5px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Register </button>
-        </div>  
+         					<div class="row" align = "right">
+							<button type="button" onclick="login()" style="border-radius: 50px;border:none;background-color:white; padding-right: 60px;justify-items: center;margin: 5px;color:grey;"> Log In </button>
+        						<button type="button" onclick="register()" style="border-radius: 50px;border:none;background-color:white; padding-right: 40px;justify-items: center;margin: 5px;color:grey;"> Register </button>
+        					</div>  
 				</div>
 				</div> <!--Login-->
 				
-				<div class="row" style="background-color: grey;padding:10px;color:white;margin-top:20px;">
+				<div class="row" style="padding-left:20px;border-radius: 50px;background-color: grey;padding:10px;color:white;margin-top:20px;">
 					<h1><img src="./Assets/menuList.png">Goals</h1>
 					<br />
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-					</div>
-					<br />
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-					</div>
-					<br />
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+					<div style="padding-left:30px;padding-bottom:20px;">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)"style="padding-left:20px;">
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+						</div>
+						<br />
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+						</div>
+						<br />
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+						</div>
 					</div>
 			</div> <!--goals-->
 			<div class="row">
-				<h1 style="background-color: chocolate;padding:10px;color:white;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
+				<h1 style="padding-left:20px;border-radius: 50px;background-color: chocolate;padding:10px;color:white;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
 			</div> <!--Leaderboard-->
- 
+				
+				 <div class="leader row">
+
+				</div> <!--Leaderboard entry 1-->
+
+				<div class="leader row">
+
+				</div> <!--Leaderboard entry 2-->
+
+				<div class="leader row">
+
+				</div> <!--Leaderboard entry 3-->
+
+				<div class="leader row">
+
+				</div> <!--Leaderboard entry 4-->
+
+				<div class="leader row">
+
+				</div> <!--Leaderboard entry 5-->
+				
 			</div> <!--Leaderboard + goals-->
 		</div> <!--Columns-->
 		<footer class="page-footer font-small blue pt-4" style="background-image: url(./Assets/footer.png); background-size: 100%; height: 69px;">
@@ -198,7 +202,7 @@
  
  
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
+    		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
  
  
 		<script>
@@ -219,15 +223,38 @@
     
     	<script>
         
-    var points    
+    var points = 0
+    var goalsStored = [-1,-1,-1]
+    
+    var goalElements = document.getElementsByClassName("goal")
+		var goals = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
+        
+		function goal() {
+      loadScores();
+      
+			for (let i = 0; i < goalElements.length; i++) {
+        
+				let randomGoal = Math.floor(Math.random() * goals.length)
+        
+        while(goalsStored.indexOf(randomGoal) != -1)
+          randomGoal = Math.floor(Math.random() * goals.length)
+        
+				goalElements[i].innerHTML = goals[randomGoal]
+        goalsStored[i] = randomGoal
+			}
+		}
         
    function register() {     
    	 var email = document.getElementById("emailbar").value;
    	 var password = document.getElementById("passwordbar").value;
+     var name = document.getElementById("namebar").value;
      
      firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
         alert('success')
-       	points = 0;
+       
+       registername(name)
+       	writeUserData();
+       
       })
      
      	.catch(function(error) {
@@ -238,6 +265,17 @@
         alert(errorMessage);
       });
    }
+        
+    function registername(name) {
+    
+      var userId = firebase.auth().currentUser.uid;
+      
+      firebase.database().ref('users/' + userId).update({
+        
+        realName : name
+    })
+      
+    }
     
     function login() {    
       
@@ -245,7 +283,7 @@
       var password = document.getElementById("passwordbar").value;
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         alert('success')
-        getPointValue();
+     	 getPointValue()
         
       })
      	.catch(function(error) {
@@ -257,41 +295,83 @@
 			});
     }
         
-    function writeUserData(points, goals) {
+    function writeUserData() {
       
         var userId = firebase.auth().currentUser.uid;
-      
-    	firebase.database().ref('users/' + userId).set({
+      firebase.database().ref('users/' + userId).update({
         
         pointnumber : points,
-    		firstGoal : goals[0],
-        secondGoal : goals[1],
-        thirdGoal : goals[2]
+    		firstGoal : goalsStored[0],
+        secondGoal : goalsStored[1],
+        thirdGoal : goalsStored[2]
     })
         
     }
         
     function getPointValue() {
         
-        var userId = firebase.auth().currentUser.uid;
+      var userId = firebase.auth().currentUser.uid;
+        var user = firebase.auth().currentUser;
+        var userId = user.uid;
+      
 				return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
   			points = snapshot.val().pointnumber;
+          
+      	goalsStored[0] = snapshot.val().firstGoal;
+      	goalsStored[1] = snapshot.val().secondGoal;
+      	goalsStored[2] = snapshot.val().thirdGoal;
+          
+          for(let i = 0; i < goalsStored.length; i++) {
+            
+						goalElements[i].innerHTML = goals[goalsStored[i]];
+          }
+          
+          
+			alert("You have " + points + " point(s)!")
 			});
         
   		}
         
         
-    function AddPoint() {
+    function AddPoint(index, box) {
        
-      var userId = firebase.auth().currentUser.uid;
+        var user = firebase.auth().currentUser;
       
-      firebase.database().ref('users/' + userId).set({
-        pointnumber : points+1,
-      	})
+      points++;
+      
+      if(user) {
+        var userId = user.uid;
+        
+       	writeUserData();
+      }
 
+			alert("You have " + points + " point(s)!")
       
-      getPointValue()
-     }
+      let randomGoal  = Math.floor(Math.random() * goals.length)
+      
+      while(goalsStored.indexOf(randomGoal) != -1)
+        randomGoal = Math.floor(Math.random() * goals.length)
+      
+			goalElements[index].innerHTML = goals[randomGoal]
+      goalsStored[index] = randomGoal
+			box.checked=false
+		}
+        
+        function loadScores() {
+          leaders = document.getElementsByClassName("leader")
+          let counter = leaders.length;
+          
+          firebase.database().ref('/users').orderByChild('pointnumber').limitToLast(leaders.length).once('value').then(function(snapshot) {
+          	snapshot.forEach(element => {
+              console.log(element.toJSON().realName, element.toJSON().pointnumber)
+              counter--;
+              leaders[counter].innerHTML = `
+								<h4>${element.toJSON().realName}</h4>
+								<p>${element.toJSON().pointnumber}</p>
+							`
+            });
+          });
+        }
         
     	</script>  
       

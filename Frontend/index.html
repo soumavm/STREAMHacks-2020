@@ -7,23 +7,32 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
 	<title>BikePath</title>
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCXeTdVH9fJT8cc8RRKICuUgLQEl4T1Y&callback=initMap&libraries=&v=weekly"
 			defer></script>
 
 	<script>
+        var Jason = document.getElementsByClassName("goal")
+        var yeet = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
 		function goal() {
-			var Jason = document.getElementsByClassName("goal")
-			var yeet = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15km"];
 			for (let i = 0; i < Jason.length; i++) {
 				var Butt = Math.floor(Math.random() * yeet.length)
 				Jason[i].innerHTML = yeet[Butt]
 				yeet.splice(Butt, 1)
 			}
 		}
+		var points = 0
+		function AddPoint() {
+			
+			points += 1
+			alert(points)
+		}
 	</script>
-
+	<!--give new goal, make id unchecked-->
 	<script>
 		"use strict";
 
@@ -70,6 +79,11 @@
 				'location': location,
 				'keyword': type,
 				'rankby': 'distance'
+
+fetch('http://127.0.0.1:5000/api/address?address=${this.state.address}&type={')
+	  .then(response => response.json())
+					.then(data => console.log(data));
+
 			}
 
 		}
@@ -85,16 +99,19 @@
 	</div>
 	<div class="container">
 		<div class="row">
+			<div class="col-xs-12">
+				<div align="right">
+					<div id="firebaseui-auth-container"></div>
+
+				</div>
+			</div>
 			<div class="col-xs-6">
 				<div class="row">
 					<div class="md-form mt-0">
 						<input id="locationbar" class="form-control" type="text" placeholder="Enter your Location" aria-label="Search">
 						<p class="text-center" style="padding-top: 10px;">AND</p>
 						<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
-						<div style="text-align:center;">
-							<button type="button" onclick="routeCalcbutton()" style="background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Search </button>
-							<button type="button" onclick="login()"style="background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"><img src="./Assets/door.png">Log In</button>
-						</div>
+						<div style="text-align:center;"><button type="button" onclick="routeCalcbutton()" style="background-color:seagreen; padding-right: 75px;justify-items: center;margin: 10px;color:white;"> <img src="./Assets/zoom.png"> Search </button></div>
 
 
 					</div> <!--Search Bar-->
@@ -110,42 +127,42 @@
 
 
 			<div class="col-xs-3">
-				<h1 style="border-bottom: 3px solid red;"><img src="./Assets/flag.png">Places</h1>
+				<h1 style="border-bottom: 3px solid red;">Places</h1>
 			</div> <!--Places and Info-->
-
-
 			<div class="col-xs-3">
 				<div class="row">
 					<h1 style="border-bottom: 3px solid red;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
 				</div> <!--Leaderboard-->
 				<div class="row">
 					<h1 style="border-bottom: 3px solid red;"><img src="./Assets/menuList.png">Goals</h1>
-				<br />
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-					<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-				</div>
-				<br />
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-					<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-				</div>
-				<br />
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-					<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-				</div>
+					<br />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint()">
+						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+					</div>
+					<br />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint()">
+						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+					</div>
+					<br />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint()">
+						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+					</div>
 
-			</div> <!--goals-->
 
-		</div> <!--Leaderboard + goals-->
-	</div> <!--Columns-->
+
+				</div> <!--goals-->
+
+			</div> <!--Leaderboard + goals-->
+		</div> <!--Columns-->
 		<!-- The core Firebase JS SDK is always required and must be listed first -->
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
 
-		<!-- TODO: Add SDKs for Firebase products that you want to use
-			 https://firebase.google.com/docs/web/setup#available-libraries -->
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+
 
 		<script>
 			// Your web app's Firebase configuration
@@ -161,8 +178,21 @@
 			};
 			// Initialize Firebase
 			firebase.initializeApp(firebaseConfig);
-			firebase.analytics();
 		</script>
+		<script>
+			var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+
+
+			ui.start('#firebaseui-auth-container', {
+				signInOptions: [
+					// List of OAuth providers supported.
+					firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+				],
+				// Other config options...
+			});
+		</script>
+
 
 
 </body>

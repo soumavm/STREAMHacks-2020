@@ -85,8 +85,9 @@
 		      let place = data.results[i];
 		      list[i].innerHTML =
 			`<p>${place.name}</p>
-						<button type="button" style="color: black;" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
-			<button type="button"  style="color: black;" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycling</button>`;
+						<button type="button" style="background-color:darkgrey;" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
+			<button type="button" style="background-color:slategrey;" onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycling</button>`;
+
 		    }
 		  });
 		}
@@ -194,25 +195,26 @@
 				<!--Leaderboard-->
 				<div class="row major-container" style="background-color: chocolate;">
 					<h1><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
-            <div class="leader row">
+						
+						<div class="leader row">
+							<span><img src="./Assets/flatshadow_medal4.png"></span>
+						</div> <!--Leaderboard entry 1-->
 
-            </div> <!--Leaderboard entry 1-->
+						<div class="leader row">
 
-            <div class="leader row">
+						</div> <!--Leaderboard entry 2-->
 
-            </div> <!--Leaderboard entry 2-->
+						<div class="leader row">
 
-            <div class="leader row">
+						</div> <!--Leaderboard entry 3-->
 
-            </div> <!--Leaderboard entry 3-->
+						<div class="leader row">
 
-            <div class="leader row">
+						</div> <!--Leaderboard entry 4-->
 
-            </div> <!--Leaderboard entry 4-->
+						<div class="leader row">
 
-            <div class="leader row">
-
-            </div> <!--Leaderboard entry 5-->
+						</div> <!--Leaderboard entry 5-->
 				</div> <!--Leaderboard End-->
 			</div>
 		</div> <!--Main Body End-->

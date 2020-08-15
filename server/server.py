@@ -14,6 +14,8 @@ import flask_cors
 from flask_cors import CORS
 CORS(app)
 
+import requests
+
 apiKey = os.getenv("APIKEY")
 
 geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey

@@ -2,84 +2,74 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="./style.css" rel="stylesheet" type="text/css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>BikePath</title>
     </head>
 
-<body>
-	<div class="jumbotron text-center"style="background-image: url(./background.png); background-size: 100%;">
- 		<h1>BikePath</h1> 
-	</div>
-<div class="container">
-		<div class="row">
-			<div class="col-xs-6">
+	<body>
+		<div class="jumbotron text-center"style="background-image: url(./Assets/background.png); background-size: 100%;">
+			<h1 style="text-light">BikePath</h1> 
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="row">
+						<div class="md-form mt-0">
+							<input class="form-control" type="text" placeholder="Enter a Location" aria-label="Search">
+						</div> <!--Search Bar-->
+					</div> <!--Search Row-->
+					<div class="row">
+						<div class="col-xs-6">
+									<h4>map goes here</h4>
+						</div> <!--Map-->
+					</div>
+				</div> <!--Search and Map Column-->
+
+				<div class="col-xs-3">
+					<h4>Places</h4>
+				</div> <!--Places and Info-->
+
+				<div class="col-xs-3">
+					<div class="row">
+						<h4>Leaderboard</h4>
+					</div> <!--Leaderboard-->
 				<div class="row">
-					<div class="md-form mt-0">
-  						<input class="form-control" type="text" placeholder="Enter a Location" aria-label="Search">
-</div> <!--Search Bar-->
-				</div> <!--Search Row-->
-				<div class="row">
-					<div class="col-xs-6">
-                				<h4>map goes here</h4>
-        				</div> <!--Map-->
-				</div>
-			</div> <!--Search and Map Column-->
-
-
-<div class="col-xs-3">
-<h4>Places</h4>
-			</div> <!--Places and Info-->
-
-
-<div class="col-xs-3">
-	<div class="row">
-		<h4>Leaderboard</h4>
-	</div> <!--Leaderboard-->
-	<div class="row">
-		<h4>Quests</h4>
-	</div> <!--Quests-->
-			
-</div> <!--Leaderboard + Quests-->
-		 </div> <!--Columns-->
+					<h4>Quests</h4>
+				</div> <!--Quests-->
+				
+			</div> <!--Leaderboard + Quests-->
+		</div> <!--Columns-->
 
 
 
-		<!-- The core Firebase JS SDK is always required and must be listed first -->
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+			<!-- The core Firebase JS SDK is always required and must be listed first -->
+			<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
 
-		<!-- TODO: Add SDKs for Firebase products that you want to use
-			https://firebase.google.com/docs/web/setup#available-libraries -->
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+			<!-- TODO: Add SDKs for Firebase products that you want to use
+				https://firebase.google.com/docs/web/setup#available-libraries -->
+			<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
 
-		<script>
-		// Your web app's Firebase configuration
-		var firebaseConfig = {
-			apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
-			authDomain: "bikeity-bike.firebaseapp.com",
-			databaseURL: "https://bikeity-bike.firebaseio.com",
-			projectId: "bikeity-bike",
-			storageBucket: "bikeity-bike.appspot.com",
-			messagingSenderId: "815014324791",
-			appId: "1:815014324791:web:68da854e317eacdb342db2",
-			measurementId: "G-TWJ7M7LBM4"
-		};
-		// Initialize Firebase
-		firebase.initializeApp(firebaseConfig);
-		firebase.analytics();
-		var database = firebase.database();
-		</script>
-		<script src="./leaderboard.js"></script>
-</body>
-</body>
+			<script>
+			// Your web app's Firebase configuration
+			var firebaseConfig = {
+				apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
+				authDomain: "bikeity-bike.firebaseapp.com",
+				databaseURL: "https://bikeity-bike.firebaseio.com",
+				projectId: "bikeity-bike",
+				storageBucket: "bikeity-bike.appspot.com",
+				messagingSenderId: "815014324791",
+				appId: "1:815014324791:web:68da854e317eacdb342db2",
+				measurementId: "G-TWJ7M7LBM4"
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
+			var database = firebase.database();
+			</script>
+			<script src="./leaderboard.js"></script>
+	</body>
 </html>
-
-
-
-
-
-
-

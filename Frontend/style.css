@@ -37,3 +37,7 @@ footer{
     opacity:0.7;
     color:white;
 }
+
+#pointDisplay{
+    padding: 20px;
+}

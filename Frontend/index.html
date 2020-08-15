@@ -396,10 +396,20 @@
           	snapshot.forEach(element => {
               console.log(element.toJSON().realName, element.toJSON().pointnumber)
               counter--;
+			  var medal = ''
+			  
+			  if(counter < 3) {
+				medal = `<img src="Assets/medal_${counter+1}.png">`
+			  }
 			  
               leaders[counter].innerHTML = `
-			  				<h4 style="padding-left:20px;">${element.toJSON().realName}</h4>
-							<p style="padding-left:20px;">${element.toJSON().pointnumber}</p>
+							<div class="col-xs-2">
+								${medal}
+							</div>
+							<div class="col-xs-8">
+								<h4 style="padding-left:20px;">${element.toJSON().realName}</h4>
+								<p style="padding-left:20px;">${element.toJSON().pointnumber}</p>
+							</div>
 							`
             });
           });

@@ -2,73 +2,174 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>BikePath</title>
+
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCXeTdVH9fJT8cc8RRKICuUgLQEl4T1Y&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+
+<script>
+		function goal() {
+			var Jason = document.getElementsByClassName("goal")
+			var yeet = ["goal1", "goal2", "goal3", "goal4", "goal5", "goal6"];
+			for (let i = 0; i < Jason.length; i++) {
+				var Butt= Math.floor(Math.random() * yeet.length)
+                Jason[i].innerHTML = yeet[Butt]
+                yeet.splice(Butt, 1)
+			}
+		}
+</script>
+
+<script>
+"use strict";
+	
+	      	let map;
+	      
+	      	var directionsService;
+		  	var directionsRenderer
+		  
+	    	function initMap() {
+	    	
+	      	directionsService = new google.maps.DirectionsService();
+  			directionsRenderer = new google.maps.DirectionsRenderer();
+	        map = new google.maps.Map(document.getElementById("map"), {
+	          center: {
+	            lat: -34.397,
+	            lng: 150.644
+	          },
+	          zoom: 8
+	        });
+	        directionsRenderer.setMap(map);
+	        directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+	      }
+	      
+	      function calcRoute(start, end, mode) {
+	      		
+			  	var request = {
+			    origin:start,
+			    destination:end,
+			    travelMode: mode
+			  };
+			  directionsService.route(request, function(response, status) {
+			    if (status == 'OK') {
+			      directionsRenderer.setDirections(response);
+			    }
+			  });
+			}
+
+function routeCalcbutton() {
+			
+			var type = document.getElementById("destinationbar").value;
+			var location = document.getElementById("locationbar").value;
+
+			const data = {
+        'location': location,
+	'keyword': type,
+        'rankby': 'distance'
+    }
+
+fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBQYtSFUoFV2hPaMKPBW4_ynbBOAIOu03Y', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+  banana=data;
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
+		}
+
+
+	</script>
+
     </head>
 
-	<body>
-		<div class="jumbotron" style="background-image: url(./Assets/background.png); background-size: 100%;">
-			<h1 style="text-light">BikePath</h1> 
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-6">
-					<div class="row">
-						<div class="md-form mt-0">
-							<input class="form-control" type="text" placeholder="Enter a Location" aria-label="Search">
-						</div> <!--Search Bar-->
-					</div> <!--Search Row-->
-					<div class="row">
-						<div class="col-xs-6">
-									<h4>map goes here</h4>
-						</div> <!--Map-->
-					</div>
-				</div> <!--Search and Map Column-->
-
-				<div class="col-xs-3 border border-info">
-					<h4>Places</h4>
-				</div> <!--Places and Info-->
-
-				<div class="col-xs-3">
-					<div class="row">
-						<h4>Leaderboard</h4>
-					</div> <!--Leaderboard-->
+<body onload="goal()" style="font-family: 'Baloo Tamma 2', cursive;">
+	<div class="jumbotron text-center" style="background-image: url(./Assets/background.png); background-size: 100%;">
+ 		<h1 style="color:grey">BikePath</h1> 
+</div>
+<div class="container">
+		<div class="row">
+			<div class="col-xs-6">
 				<div class="row">
-					<h4>Quests</h4>
-				</div> <!--Quests-->
-				
-			</div> <!--Leaderboard + Quests-->
-		</div> <!--Container-->
+					<div class="md-form mt-0">
+  						<input id="locationbar" class="form-control" type="text" placeholder="Enter your Location" aria-label="Search">
+	  					<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
+	  					<button type="button" onclick= "routeCalcbutton()"> Submit </button>
+
+</div> <!--Search Bar-->
+				</div> <!--Search Row-->
+				<div class="row">
+					<div class="col-xs-6">
+                				<div id="map" style="float:left;width:600px;height:400px"></div>
+								<div id="directionsPanel" style="float:right;width:100%;height:100%"></div>
+
+        				</div> <!--Map-->
+				</div>
+			</div> <!--Search and Map Column-->
 
 
-			<!-- The core Firebase JS SDK is always required and must be listed first -->
-			<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+<div class="col-xs-3">
+<h4>Places</h4>
+			</div> <!--Places and Info-->
 
-			<!-- TODO: Add SDKs for Firebase products that you want to use
-				https://firebase.google.com/docs/web/setup#available-libraries -->
-			<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
 
-			<script>
-			// Your web app's Firebase configuration
-			var firebaseConfig = {
-				apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
-				authDomain: "bikeity-bike.firebaseapp.com",
-				databaseURL: "https://bikeity-bike.firebaseio.com",
-				projectId: "bikeity-bike",
-				storageBucket: "bikeity-bike.appspot.com",
-				messagingSenderId: "815014324791",
-				appId: "1:815014324791:web:68da854e317eacdb342db2",
-				measurementId: "G-TWJ7M7LBM4"
-			};
-			// Initialize Firebase
-			firebase.initializeApp(firebaseConfig);
-			firebase.analytics();
-			var database = firebase.database();
-			</script>
-			<script src="./leaderboard.js"></script>
-	</body>
+<div class="col-xs-3">
+	<div class="row">
+		<h4>Leaderboard</h4>
+	</div> <!--Leaderboard-->
+		<div class="row">
+		<h4>goals</h4>
+		<div class="row"> <p class="goal">goal</p></div>
+		<div class="row"> <p class="goal">goal</p></div>
+		<div class="row"> <p class="goal">goal</p></div>
+
+
+	</div> <!--goals-->
+			
+</div> <!--Leaderboard + goals-->
+		 </div> <!--Columns-->
+
+
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
+    authDomain: "bikeity-bike.firebaseapp.com",
+    databaseURL: "https://bikeity-bike.firebaseio.com",
+    projectId: "bikeity-bike",
+    storageBucket: "bikeity-bike.appspot.com",
+    messagingSenderId: "815014324791",
+    appId: "1:815014324791:web:68da854e317eacdb342db2",
+    measurementId: "G-TWJ7M7LBM4"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+
+</body>
 </html>
+

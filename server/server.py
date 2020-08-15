@@ -18,7 +18,6 @@ apiKey = os.getenv("APIKEY")
 
 geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey
 searchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + apiKey
-photoURL = "https://maps.googleapis.com/maps/api/place/photo?key=" + apiKey
 
 def listNearby(location, request):
     payload = {
@@ -37,31 +36,43 @@ def listNearby(location, request):
 def home():
     return "Hello, world!"
 
-@app.route('/api/coordinates', methods=['GET'])
-def api_coordinates():
+def geocoding(address):
+    payload = {
+        'address': address
+    }
+
+    geocoded = requests.get(geocodeURL, params=payload)
+
+    geocodedLocation = geocoded.json()['results'][0]['geometry']['location']
+
+    latitude = geocodedLocation['lat']
+    longitude = geocodedLocation['lng']
+
+    return str(latitude) + ',' + str(longitude)
+
+@app.route('/api/address', methods=['GET'])
+def api_address():
     results = []
     status = 'Success'
     statusCode = 200
 
-    if 'lat' in request.args and 'lng' in request.args:
-        latitude = request.args.get('lat')
-        longitude = request.args.get('lng')
+    if 'address' in request.args:
+        address = request.args.get('address')
 
-        location = latitude + ',' + longitude
+        location = geocoding(address)
 
         results = listNearby(location, request)
 
-        app.logger.info("Received coordinates request for %s,%s and returned %s results with status %s (%s)", latitude, longitude, len(results), statusCode, status)
+        app.logger.info("Received address request for %s and returned %s results with status %s (%s)", address, len(results), statusCode, status)
 
     else:
+        app.logger.info("Received invalid address request and returned %s results with status %s (%s)", len(results), statusCode, status)
         status = 'Invalid request'
         statusCode = 400
 
-        app.logger.info("Received invalid coordinates request and returned %s results with status %s (%s)", len(results), statusCode, status)
-
     response = {
         'results': results,
-        'status': status
+        'status': status,
     }
 
     return jsonify(response), statusCode

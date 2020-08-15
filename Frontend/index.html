@@ -386,7 +386,7 @@
               console.log(element.toJSON().realName, element.toJSON().pointnumber)
               counter--;
               leaders[counter].innerHTML = `
-								<h4>${element.toJSON().realName}</h4>
+								<h4>${counter+1} ${element.toJSON().realName}</h4>
 								<p>${element.toJSON().pointnumber}</p>
 							`
             });

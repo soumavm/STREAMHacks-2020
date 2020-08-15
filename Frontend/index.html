@@ -92,8 +92,8 @@
 						<p class="text-center" style="padding-top: 10px;">AND</p>
 						<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
 						<div style="text-align:center;">
-							<button type="button" onclick="routeCalcbutton()" style="background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Search </button>
-							<button type="button" onclick="login()"style="background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"><img src="./Assets/door.png">Log In</button>
+							<button type="button" onclick="routeCalcbutton()" style="border:none;background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Search </button>
+							<button type="button" onclick="login()"style="border:none;background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"><img src="./Assets/door.png">Log In</button>
 						</div>
 
 
@@ -110,33 +110,32 @@
 
 
 			<div class="col-xs-3">
-				<h1 style="border-bottom: 3px solid red;"><img src="./Assets/flag.png">Places</h1>
+				<h1 style="background-color: seagreen;padding:10px;color:white;"><img src="./Assets/flag.png">Places</h1>
 			</div> <!--Places and Info-->
 
 
 			<div class="col-xs-3">
-				<div class="row">
-					<h1 style="border-bottom: 3px solid red;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
-				</div> <!--Leaderboard-->
-				<div class="row">
-					<h1 style="border-bottom: 3px solid red;"><img src="./Assets/menuList.png">Goals</h1>
-				<br />
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-					<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-				</div>
-				<br />
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-					<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-				</div>
-				<br />
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-					<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
-				</div>
-
+				<div class="row" style="background-color: grey;padding:10px;color:white;">
+					<h1><img src="./Assets/menuList.png">Goals</h1>
+					<br />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+					</div>
+					<br />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+					</div>
+					<br />
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+						<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
+					</div>
 			</div> <!--goals-->
+			<div class="row">
+				<h1 style="background-color: chocolate;padding:10px;color:white;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
+			</div> <!--Leaderboard-->
 
 		</div> <!--Leaderboard + goals-->
 	</div> <!--Columns-->

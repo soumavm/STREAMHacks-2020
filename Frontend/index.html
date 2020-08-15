@@ -172,6 +172,7 @@
 				</div> <!--Login-->
 				<div class="major-container"style="background-color: pink;">
 					<h1><img src="./Assets/multiplayer.png">Me</h1>
+					<div style="justify-items: center;"><img src="./Assets/p3_walk09.png"></div>
 					<div id="pointDisplay"></div>
 				</div>
 				<div class="row major-container" style="background-color: grey;"> <!--goals-->
@@ -414,7 +415,7 @@
         }
         
 		function updatePointDisplay() {
-			document.getElementById('pointDisplay').innerHTML = `Your points: ${points}`;
+			document.getElementById('pointDisplay').innerHTML = ` <h4> Your points: <h4> <p>${points}</p> <p>(keep completing goals to earn more!)</p>`;
 		}
 		
     	</script>  

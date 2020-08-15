@@ -1,313 +1,308 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-		<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-		<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-		<link type="text/css" rel="stylesheet" href="./style.css" />
-	
-		<title>BikePath</title>
-	
-	
-	
-	
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCXeTdVH9fJT8cc8RRKICuUgLQEl4T1Y&callback=initMap&libraries=&v=weekly"
-				defer>
-		</script>
-	
-		<script>
-	
-			var goalElements = document.getElementsByClassName("goal")
-			var goals1 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
-		var goals2 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
-			function goal() {
-				for (let i = 0; i < goalElements.length; i++) {
-					var randomGoal = Math.floor(Math.random() * goals1.length)
-					goalElements[i].innerHTML = goals1[randomGoal]
-					goals1.splice(randomGoal, 1)
-				}
-			}
-
-			var points = 0
-			function AddPoint(index, box) {
-				points += 1
-				alert("You have " + points + " point(s)!")
-		var randomGoal  = Math.floor(Math.random() * goals2.length)
-				goalElements[index].innerHTML = goals2[randomGoal]
-				box.checked=false
-			}
-		</script>
-		<!--give new goal, make id unchecked-->
-		<script>
-			"use strict";
-	
-			let map;
-	
-			var directionsService;
-			var directionsRenderer;
-	
-			function initMap() {
-	
-				directionsService = new google.maps.DirectionsService();
-				directionsRenderer = new google.maps.DirectionsRenderer();
-				map = new google.maps.Map(document.getElementById("map"), {
-					center: {
-						lat: -34.397,
-						lng: 150.644
-					},
-					zoom: 8
-				});
-				directionsRenderer.setMap(map);
-				directionsRenderer.setPanel(document.getElementById('directionsPanel'));
-			}
-	
-			function calcRoute(start, end, mode) {
-	
-				var request = {
-					origin: start,
-					destination: end,
-					travelMode: mode
-				};
-				directionsService.route(request, function (response, status) {
-					if (status == 'OK') {
-						directionsRenderer.setDirections(response);
-					}
-				});
-			}
-	
-			function routeCalcbutton() {
-	
-				var type = document.getElementById("destinationbar").value;
-				var location = document.getElementById("locationbar").value;
-	
-	
-	fetch('http://127.0.0.1:5000/api/address?address=' + location + '&type=' + type)
-		.then(response => response.json())
-				.then(data => {
-		console.log(data)
-		var list = document.getElementsByClassName("location")
-		
-		for(let i = 0; i < list.length; i++) {
-		let place = data.results[i];
-		list[i].innerHTML =
-			`<p>${place.name}</p>
-					<button type="button" style="color:black;"onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
-			<button type="button" style="color:black;"onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycle</button>`;
-		}
-	});
-	
-	
-			}
-	
-	
-		</script>
-	
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
  
-	<body onload="goal()" style="font-family: 'Baloo Tamma 2', cursive;">
-		<!--Banner-->
-		<div class="jumbotron text-center" style="background-image: url(./Assets/background.png); background-size: 100%;">
-			<h1 style="color:grey">BikePath</h1>
-			<p class="banner">do your part to help the environment by cycling and recycling</p>
-		</div> <!--Banner End-->
+	<title>BikePath</title>
+ 
+  
+  
+  
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCXeTdVH9fJT8cc8RRKICuUgLQEl4T1Y&callback=initMap&libraries=&v=weekly"
+			defer></script>
+  
+	<script>
+ 
+		var goalElements = document.getElementsByClassName("goal")
+		var goals1 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
+    var goals2 = ["Walk 3 km", "Walk 5 km", "Bike to a shop", "Bike 10 km", "Walk to a new location", "Bike 15 km"];
+		function goal() {
+			for (let i = 0; i < goalElements.length; i++) {
+				var randomGoal = Math.floor(Math.random() * goals1.length)
+				goalElements[i].innerHTML = goals1[randomGoal]
+				goals1.splice(randomGoal, 1)
+			}
+		}
 
-		<!--Main Body-->
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-6">
+		var points = 0
+		function AddPoint(index, box) {
+			points += 1
+			alert("You have " + points + " point(s)!")
+      var randomGoal  = Math.floor(Math.random() * goals2.length)
+			goalElements[index].innerHTML = goals2[randomGoal]
+			box.checked=false
+		}
+	</script>
+	<!--give new goal, make id unchecked-->
+	<script>
+		"use strict";
+ 
+		let map;
+ 
+		var directionsService;
+		var directionsRenderer;
+ 
+		function initMap() {
+ 
+			directionsService = new google.maps.DirectionsService();
+			directionsRenderer = new google.maps.DirectionsRenderer();
+			map = new google.maps.Map(document.getElementById("map"), {
+				center: {
+					lat: -34.397,
+					lng: 150.644
+				},
+				zoom: 8
+			});
+			directionsRenderer.setMap(map);
+			directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+		}
+ 
+		function calcRoute(start, end, mode) {
+ 
+			var request = {
+				origin: start,
+				destination: end,
+				travelMode: mode
+			};
+			directionsService.route(request, function (response, status) {
+				if (status == 'OK') {
+					directionsRenderer.setDirections(response);
+				}
+			});
+		}
+ 
+		function routeCalcbutton() {
+ 
+			var type = document.getElementById("destinationbar").value;
+			var location = document.getElementById("locationbar").value;
+ 
+ 
+  fetch('http://127.0.0.1:5000/api/address?address=' + location + '&type=' + type)
+      .then(response => response.json())
+            .then(data => {
+    console.log(data)
+    var list = document.getElementsByClassName("location")
+    
+    for(let i = 0; i < list.length; i++) {
+      let place = data.results[i];
+      list[i].innerHTML =
+        `<p>${place.name}</p>
+				<button type="button" style="color:black;"onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'WALKING')">Walk</button>
+      	<button type="button" style="color:black;"onclick="calcRoute('${location}', '${place.geometry.location.lat},${place.geometry.location.lng}', 'BICYCLING')">Bicycle</button>`;
+    }
+  });
+ 
+ 
+		}
+ 
+ 
+	</script>
+ 
+</head>
+ 
+<body onload="goal()" style="font-family: 'Baloo Tamma 2', cursive;">
+	<div class="jumbotron text-center" style="background-image: url(./Assets/background.png); background-size: 100%;">
+		<h1 style="color:grey">BikePath</h1>
+		<p style="background-color: lightgrey; opacity:0.7;color:white;">do your part to help the environment, by cycling and recycling</p>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="row">
+					<div class="md-form mt-0">
+						<input id="locationbar" class="form-control" type="text" placeholder="Enter your Location" aria-label="Search">
+						<p class="text-center" style="padding-top: 10px;">AND</p>
+						<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
+						<div style="text-align:center;">
+							<button type="button" onclick="routeCalcbutton()" style="border:none;background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;border-radius: 50px;"> <img src="./Assets/zoom.png"> Search </button>
+						</div>
+ 
+ 
+					</div> <!--Search Bar-->
 					<div class="row">
-						<div class="md-form mt-0">
-							<p class="text-center">right now i'm at:</p>
-							<input id="locationbar" class="form-control" type="text" placeholder="Enter your Location" aria-label="Search">
-							<p class="text-center" style="padding-top: 10px;">and I want to go to a:</p>
-							<input id="destinationbar" class="form-control" type="text" placeholder="Enter a Destination" aria-label="Search">
-							<div style="text-align:center;">
-								<button type="button" onclick="routeCalcbutton()" style="background-color:seagreen; padding-right: 69px;justify-items: center;margin: 10px;color:white;font-weight:bold;font-size:large;"> <img src="./Assets/zoom.png"> Search </button>
-							</div>
-	
-	
-						</div> <!--Search Bar-->
-						<div class="row">
-							<div class="col-xs-6">
-								<div id="map" style="float:left; width:585px;height:400px"></div>
-								<div id="directionsPanel" style="float:right;width:100%;height:100%"></div>
-	
-							</div> <!--Map-->
-						</div>
-					</div> <!--Search Row-->
-				</div> <!--Search and Map Column-->
-	
-				<!--Login + Goals-->
-				<div class="col-xs-2">
-					<div class="major-container"style="background-color: seagreen;"">
-						<h1 style=""><img src="./Assets/flag.png">Places</h1>
-						<div style="padding-left: 30px; padding-bottom:20px;">
-							<div class="location"></div>
-							<br>
-							<div class="location"></div>
-							<br>
-							<div class="location"></div>
-							<br>
-							<div class="location"></div>
-							<br>
-							<div class="location"></div>
-							<br>
-						</div>
+						<div class="col-xs-6">
+							<div id="map" style="float:left; width:585px;height:400px"></div>
+							<div id="directionsPanel" style="float:right;width:100%;height:100%"></div>
+ 
+						</div> <!--Map-->
+					</div>
+				</div> <!--Search Row-->
+			</div> <!--Search and Map Column-->
+ 
+ 
+			<div class="col-xs-3">
+				<div style="background-color: seagreen;border-radius: 50px;color:white">
+					<h1 style="padding:20px;"><img src="./Assets/flag.png">Places</h1>
+					<div style="padding-left: 30px; padding-bottom:30px;">
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
+						<div class="location"></div>
+						<br>
 					</div>
 				</div>
-				<div class="col-xs-2">
-					<div class="row major-container" style="background-color: rgb(90, 146, 211);">
-						<h1><img src="./Assets/door.png">Login</h1>
-						<div style="width:75%; margin-left:30px;margin-bottom:10px;">
-							<div class="row" align="right">
-								<input id="emailbar" class="form-control" type="text" placeholder="Email">
-							</div>
-		
-							<div class="row" align="right">
-								<input id="passwordbar" class="form-control" type="password" placeholder="Password">
-							</div>
-																									
-							<div class="row" align = "right">
-								<button type="button" class="sign-in" onclick="login()"> Log In </button>
-								<button type="button" class="sign-in" onclick="register()"> Register </button>
-							</div>  
-						</div>	
+			</div>
+			<div class="col-xs-3">
+				<div class="row" style="border-radius: 50px;background-color: rgb(90, 146, 211);padding:10px;color:white;">
+					<h1><img src="./Assets/door.png">Login</h1>
+					<div style="width:75%; margin-left:30px;margin-bottom:10px;">
+						<div class="row" align="right">
+							<input id="emailbar" class="form-control" type="text" placeholder="Email">
+						</div>
+	
+						<div class="row" align="right">
+							<input id="passwordbar" class="form-control" type="password" placeholder="Password">
+						</div>
+                                                                                                 
+         <div class="row" align = "right">
+			<button type="button" onclick="login()" style="border-radius: 50px;border:none;background-color:white; padding-right: 60px;justify-items: center;margin: 5px;color:grey;"> Log In </button>
+        	<button type="button" onclick="register()" style="border-radius: 50px;border:none;background-color:white; padding-right: 40px;justify-items: center;margin: 5px;color:grey;"> Register </button>
+        </div>  
+				</div>
 				</div> <!--Login-->
-				<div class="row major-container" style="background-color: grey;"> <!--goals-->
+				
+				<div class="row" style="padding-left:20px;border-radius: 50px;background-color: grey;padding:10px;color:white;margin-top:20px;">
 					<h1><img src="./Assets/menuList.png">Goals</h1>
-						<br />
+					<br />
 					<div style="padding-left:30px;padding-bottom:20px;">
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-							<label class="goal custom-control-label" for="defaultUnchecked">Loading Goal</label>
+							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)"style="padding-left:20px;">
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 						</div>
 						<br />
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-							<label class="goal custom-control-label" for="defaultUnchecked">Loading Goal</label>
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 						</div>
 						<br />
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input" id="defaultUnchecked" onclick="AddPoint(0, this)">
-							<label class="goal custom-control-label" for="defaultUnchecked">Loading Goal</label>
+							<label class="goal custom-control-label" for="defaultUnchecked" style="padding-left:20px;font-size:large;">Loading Goal</label>
 						</div>
 					</div>
-				</div> <!--goals-->
-			</div> <!--Login + goals-->
-			<div class="col-xs-2">
-				<!--Leaderboard-->
-				<div class="row major-container" style="background-color: chocolate;">
-					<h1><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
-				</div> <!--Leaderboard End-->
-			</div>
-		</div> <!--Main Body End-->
-		<footer class="page-footer">
+			</div> <!--goals-->
+			<div class="row">
+				<h1 style="padding-left:20px;border-radius: 50px;background-color: chocolate;padding:10px;color:white;"><img src="./Assets/leaderboardsComplex.png">Leaderboard</h1>
+			</div> <!--Leaderboard-->
+ 
+			</div> <!--Leaderboard + goals-->
+		</div> <!--Columns-->
+		<footer class="page-footer font-small blue pt-4" style="background-image: url(./Assets/footer.png); background-size: 100%; height: 69px;">
 
 		</footer>
-			
 		<!-- The core Firebase JS SDK is always required and must be listed first -->
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+ 
+ 
 		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
-		
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
+ 
+ 
 		<script>
-				// Your web app's Firebase configuration
-				var firebaseConfig = {
-					apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
-					authDomain: "bikeity-bike.firebaseapp.com",
-					databaseURL: "https://bikeity-bike.firebaseio.com",
-					projectId: "bikeity-bike",
-					storageBucket: "bikeity-bike.appspot.com",
-					messagingSenderId: "815014324791",
-					appId: "1:815014324791:web:68da854e317eacdb342db2",
-					measurementId: "G-TWJ7M7LBM4"
-				};
-				// Initialize Firebase
-				firebase.initializeApp(firebaseConfig);
+			// Your web app's Firebase configuration
+			var firebaseConfig = {
+				apiKey: "AIzaSyCHGiluTWm5TTtPpWupEWpf8W6bncS2vow",
+				authDomain: "bikeity-bike.firebaseapp.com",
+				databaseURL: "https://bikeity-bike.firebaseio.com",
+				projectId: "bikeity-bike",
+				storageBucket: "bikeity-bike.appspot.com",
+				messagingSenderId: "815014324791",
+				appId: "1:815014324791:web:68da854e317eacdb342db2",
+				measurementId: "G-TWJ7M7LBM4"
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
 		</script>
-		
-		<script>
-			
-		var points    
-			
-	function register() {     
-		var email = document.getElementById("emailbar").value;
-		var password = document.getElementById("passwordbar").value;
-		
-		firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-			alert('success')
-			points = 0;
-		})
-		
-			.catch(function(error) {
-			// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-			console.log(errorCode, errorMessage);
-			alert(errorMessage);
-		});
-	}
-		
-		function login() {    
-		
-		var email = document.getElementById("emailbar").value;
-		var password = document.getElementById("passwordbar").value;
-		firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-			alert('success')
-			getPointValue();
-			
-		})
-			.catch(function(error) {
-			// Handle Errors here.
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			console.log(errorCode, errorMessage);
-			alert(errorMessage);
-				});
-		}
-			
-		function writeUserData(points, goals) {
-		
-			var userId = firebase.auth().currentUser.uid;
-		
-			firebase.database().ref('users/' + userId).set({
-			
-			pointnumber : points,
-				firstGoal : goals[0],
-			secondGoal : goals[1],
-			thirdGoal : goals[2]
-		})
-			
-		}
-			
-		function getPointValue() {
-			
-			var userId = firebase.auth().currentUser.uid;
-					return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-				points = snapshot.val().pointnumber;
-				});
-			
-			}
-			
-			
-		function AddPoint() {
-		
-		var userId = firebase.auth().currentUser.uid;
-		
-		firebase.database().ref('users/' + userId).set({
-			pointnumber : points+1,
-			})
+    
+    	<script>
+        
+    var points    
+        
+   function register() {     
+   	 var email = document.getElementById("emailbar").value;
+   	 var password = document.getElementById("passwordbar").value;
+     
+     firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+        alert('success')
+       	points = 0;
+      })
+     
+     	.catch(function(error) {
+  		// Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        alert(errorMessage);
+      });
+   }
+    
+    function login() {    
+      
+      var email = document.getElementById("emailbar").value;
+      var password = document.getElementById("passwordbar").value;
+      firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+        alert('success')
+        getPointValue();
+        
+      })
+     	.catch(function(error) {
+  		// Handle Errors here.
+  		var errorCode = error.code;
+  		var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        alert(errorMessage);
+			});
+    }
+        
+    function writeUserData(points, goals) {
+      
+        var userId = firebase.auth().currentUser.uid;
+      
+    	firebase.database().ref('users/' + userId).set({
+        
+        pointnumber : points,
+    		firstGoal : goals[0],
+        secondGoal : goals[1],
+        thirdGoal : goals[2]
+    })
+        
+    }
+        
+    function getPointValue() {
+        
+        var userId = firebase.auth().currentUser.uid;
+				return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+  			points = snapshot.val().pointnumber;
+			});
+        
+  		}
+        
+        
+    function AddPoint() {
+       
+      var userId = firebase.auth().currentUser.uid;
+      
+      firebase.database().ref('users/' + userId).set({
+        pointnumber : points+1,
+      	})
 
-		
-		getPointValue()
-		}
-			
-		</script>  
-		
-	</body>
+      
+      getPointValue()
+     }
+        
+    	</script>  
+      
+</body>
 </html>

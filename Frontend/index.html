@@ -148,7 +148,7 @@
 					</div>
 				</div>
 				<div class="col-xs-2">
-					<div class="row major-container" style="background-color: rgb(90, 146, 211);">
+					<div id="loginBox" class="row major-container" style="background-color: rgb(90, 146, 211);">
 						<h1><img src="./Assets/door.png">Login</h1>
 						<div style="width:75%; margin-left:30px;margin-bottom:10px;">
               
@@ -169,11 +169,11 @@
 								<button type="button" class="sign-in" onclick="register()"> Register </button>
 							</div>  
 						</div>	
-				</div> <!--Login-->
-				<div class="major-container"style="background-color: pink;">
-					<h1><img src="./Assets/multiplayer.png">Me</h1>
+					</div> <!--Login-->
+					<div id="meBox" class="major-container" style="background-color: pink;" hidden="true">
+						<h1><img src="./Assets/multiplayer.png">Me</h1>
 					<div id="pointDisplay"></div>
-				</div>
+					</div>
 				<div class="row major-container" style="background-color: grey;"> <!--goals-->
 					<h1><img src="./Assets/menuList.png">Goals</h1>
 						<br />
@@ -283,6 +283,7 @@
        
        registername(name)
        	writeUserData();
+		authChange()
        
       })
      
@@ -313,6 +314,7 @@
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         alert('success')
      	 getPointValue()
+		 authChange()
         
       })
      	.catch(function(error) {
@@ -415,6 +417,11 @@
         
 		function updatePointDisplay() {
 			document.getElementById('pointDisplay').innerHTML = `Your points: ${points}`;
+		}
+		
+		function authChange() {
+			document.getElementById('meBox').removeAttribute('hidden');
+			document.getElementById('loginBox').setAttribute('hidden','true');
 		}
 		
     	</script>  
